@@ -1,75 +1,78 @@
-# WriteUp3---
-title: "Hack The Box - BOX NAME HERE"
-author: Ryan Kozak
-date: "2021-06-15"
-subject: "CTF Writeup Template"
-keywords: [HTB, CTF, Hack The Box, Security]
-lang: "en"
-titlepage: true
-title-page-color: "141d2b"
-titlepage-rule-color: "11b925"
-titlepage-text-color: "FFFFFF"
-toc: true
-toc-own-page: true
-titlepage-background: "./images/bg.pdf"
-...
+**Title**: "Hack The Box - BOX NAME HERE"
+
+**Author**: Tarell King
+
+**Date**: "2024-22-24"
+
+**Tools Used**: [Nmap, Dirb, FFUF, 
 
 
-*Everything below is just random stuff for the sake of example.*
-
-# Information Gathering
-
-## Nmap
+## Scanning
 We begin our reconnaissance by running an Nmap scan checking default scripts and testing for vulnerabilities.
 
 ```console
-x@wartop:~$ nmap -sVC 192.168.100.6
 
-Starting Nmap 7.01 ( https://nmap.org ) at 2019-08-11 08:57 PDT
-Nmap scan report for 192.168.100.6 (192.168.100.1)
-Host is up (0.022s latency).
-Not shown: 996 closed ports
-PORT    STATE SERVICE  VERSION
-22/tcp  open  ssh      OpenSSH 7.9 (protocol 2.0)
-53/tcp  open  domain
-81/tcp  open  http     Apache httpd
-|_http-server-header: Apache
-444/tcp open  ssl/http Apache httpd
-|_http-server-header: Apache
-| ssl-cert: Subject: commonName=192.168.100.6
-| Not valid before: 2018-07-06T14:40:08
-|_Not valid after:  4756-06-01T14:40:08
+┌──(tarell㉿kali)-[~]
+└─$ sudo nmap -sV 10.10.11.11
+
+Starting Nmap 7.94 ( https://nmap.org ) at 2024-06-22 22:42 EDT
+Nmap scan report for 10.10.11.11
+Host is up (0.097s latency).
+Not shown: 998 closed tcp ports (reset)
+```
+
+#Enumeration
+
+```console
+
+PORT   STATE SERVICE VERSION
+22/tcp open  ssh     OpenSSH 8.2p1 Ubuntu 4ubuntu0.11 (Ubuntu Linux; protocol 2.0)
+80/tcp open  http    Apache httpd 2.4.41 ((Ubuntu))
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
 
 Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
-Nmap done: 1 IP address (1 host up) scanned in 201.22 seconds
-```
-From the above output we can see that ports, **22**, **53**, **81**, and **444** are the ports open. This is just an example to show code formatting so who cares.
-
-Look  here's an image of my website, this is how you format an image.
-
-![My Website](./images/ryankozak.com.png)
-\ **Figure 1:** My Website
-
-
-![Github](./images/github.png)
-\ **Figure 2:** Github Profile
-
-Maybe we want to show some python code too, to let's take a look at a snipped from [codewars](https://www.codewars.com) to format time as human readable.
-
-```python
-def make_readable(seconds):        
-
-    hours = seconds / 60**2
-    minutes = seconds/60 - hours*60
-    seconds = seconds - hours*(60**2) - minutes*60
-
-    return '%02d:%02d:%02d' % (hours, minutes, seconds)
+Nmap done: 1 IP address (1 host up) scanned in 9.31 seconds
 ```
 
+From the above output we can see that ports, 22, 53, and 81 are the ports open. 
 
-# Exploitation  
 
-In order to gain our initial foothold we need to blablablabla. Here's another code snippet just for fun.
+
+# Fuzzing  
+
+Perform a sub-domain/vhost fuzzing scan on ‘*.board.htb’ using the provided IP address. To achieve this, use a wordlist of common subdomains. This wordlist will try each entry as a subdomain for ‘board.htb’. Here is the command:
+```console
+
+ffuf -w Desktop/wordlist.txt -u http://board.htb/ -H "host:FUZZ.board.htb" -H "Content-Type: application/x-www-form-urlencoded" -fs 15949 -c 
+
+```
+after fuzzing we can see that x was found 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ```php
 function sqInRect($lng, $wdth) {
